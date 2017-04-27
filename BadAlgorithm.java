@@ -19,7 +19,7 @@ public class BadAlgorithm{
 		this.carryLimit = carryLimit;
 		this.money = money;
 		this.constraints = constraints;
-		this.numItems = numItems
+		this.numItems = numItems;;;;
 	}
 
 	public ArrayList<String> runAlgorithm() {
