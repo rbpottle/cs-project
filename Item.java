@@ -1,14 +1,15 @@
-public class Item extends Comparable<Item>{
+
+public class Item implements Comparable<Item>{
 
 	private String name;
-	private int class;
+	private int classNum;
 	private double weight;
 	private double cost;
 	private double resale;
 
-	public Item(String name, int class, double weight, double cost, double resale){
+	public Item(String name, int classNum, double weight, double cost, double resale){
 		this.name = name;
-		this.class = class;
+		this.classNum = classNum;
 		this.weight = weight;
 		this.cost = cost;
 		this.resale = resale;
@@ -18,8 +19,8 @@ public class Item extends Comparable<Item>{
 		return name;
 	}
 
-	public int getClass() {
-		return class;
+	public int getClassNum() {
+		return classNum;
 	}
 
 	public double getWeight() {
@@ -40,6 +41,10 @@ public class Item extends Comparable<Item>{
 
 	@Override
 	public int compareTo(Item other) {
-		return this.getProfit() - other.getProfit();
+		if (this.getProfit() - other.getProfit() > 0) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 }
