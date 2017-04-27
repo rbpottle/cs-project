@@ -43,6 +43,8 @@ public class Item implements Comparable<Item>{
 	public int compareTo(Item other) {
 		if (this.getProfit() - other.getProfit() > 0) {
 			return 1;
+		} else if (this.getProfit() - other.getProfit() == 0) {
+			return -1;
 		} else {
 			return 0;
 		}
