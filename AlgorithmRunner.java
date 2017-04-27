@@ -1,16 +1,20 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Random;
 
 public class AlgorithmRunner {
 	public static void main(String[] args) {
 		
-		int numProblems = 1; // adjust this for however many number of problems there are
+		int numProblems = 21; // adjust this for however many number of problems there are
 		for (int i = 1; i <= numProblems; i++) {
 			String fileName="project_instances/problem" + i + ".in";
 			try{
+				// -------------------- FOR READING INPUT FILE -------------------- \\
+				
 				//Create object of FileReader
 				FileReader inputFile = new FileReader(fileName);
 		
@@ -22,17 +26,12 @@ public class AlgorithmRunner {
 				
 				double pounds = Double.parseDouble(bufferReader.readLine());
 				double dollars = Double.parseDouble(bufferReader.readLine());
-				int numOfItems = Integer.parseInt(bufferReader.readLine());
-				int numOfConstraints = Integer.parseInt(bufferReader.readLine());
+				int numItems = Integer.parseInt(bufferReader.readLine());
+				int numConstraints = Integer.parseInt(bufferReader.readLine());
 				
-				System.out.println(pounds);
-				System.out.println(dollars);
-				System.out.println(numOfConstraints);
-				System.out.println(numOfItems);
-
 				// Read the lines of items
 				ArrayList<Item> itemList = new ArrayList<Item>();
-				for (int j = 0; j < numOfItems; j++)   {
+				for (int j = 0; j < numItems; j++)   {
 					// splits the line up
 					line = bufferReader.readLine();
 					String stringArray[] = line.split("; ");
@@ -49,13 +48,13 @@ public class AlgorithmRunner {
 				
 				// Initialize HashMaps and HashSets for each class
 				HashMap<Integer, HashSet<Integer>> constraints = new HashMap<Integer, HashSet<Integer>>();
-				for (int classNum = 0; classNum < numOfItems; classNum++) {
+				for (int classNum = 0; classNum < numItems; classNum++) {
 					constraints.put(classNum, new HashSet<Integer>());
 				}
 				
 				
 				// Read the lines of constraints
-				for (int j = 0; j < numOfConstraints; j++)   {
+				for (int j = 0; j < numConstraints; j++)   {
 					// splits the line up
 					line = bufferReader.readLine();
 					String stringArray[] = line.split(", ");
@@ -74,9 +73,46 @@ public class AlgorithmRunner {
 					}
 					
 				}
+
 				//Close the buffer reader
-				System.out.println("all done!");
+				System.out.println("finished reading the input file...");
 				bufferReader.close();
+				
+				// -------------------- FOR RUNNING THE ALGORITHM -------------------- \\
+				BadAlgorithm algorithm = new BadAlgorithm();
+				algorithm.newStore(itemList, pounds, dollars, constraints, numItems);
+				ArrayList<Item> itemsToBuy = algorithm.runAlgorithm();
+				
+				
+				// -------------------- FOR THE OUTPUT FILE BELOW -------------------- \\
+				
+				//choose file name here
+				PrintWriter writer = null;
+		        try {
+		            //choose file name here
+		            writer = new PrintWriter("output/problem" + i + ".out"); // i is still the problem number lol
+		            
+		            double totalProfit = 0.0;
+		            
+		            for (Item currItem: itemsToBuy) {
+		            	writer.write(currItem.getName() + "\r\n");
+		            	totalProfit += currItem.getProfit();
+		            	
+		            	// System.out.println("added item: " + currItem.getName());
+		            }
+		           
+		            System.out.println("total profit is: " + totalProfit);
+		            
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        } finally {
+		            try {
+		                // Close the writer regardless of what happens...
+		                writer.close();
+		            } catch (Exception e) {
+		            }
+		        }
+				
 			}catch(Exception e){
 				System.out.println("Error while reading file line by line:" + e.getMessage());                      
 			}
