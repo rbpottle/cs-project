@@ -11,6 +11,8 @@ public class AlgorithmRunner {
 		
 		int numProblems = 21; // adjust this for however many number of problems there are
 		for (int i = 1; i <= numProblems; i++) {
+			System.out.println("reading from problem" + i);
+			
 			String fileName="project_instances/problem" + i + ".in";
 			try{
 				// -------------------- FOR READING INPUT FILE -------------------- \\
@@ -102,6 +104,7 @@ public class AlgorithmRunner {
 		            }
 		           
 		            System.out.println("total profit is: " + totalProfit);
+		            System.out.println("finished writing output file");
 		            
 		        } catch (Exception e) {
 		            e.printStackTrace();
