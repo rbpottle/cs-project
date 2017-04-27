@@ -14,7 +14,7 @@ public class BadAlgorithm{
 
 	}
 
-	public newStore(ArrayList<Item> itemList, int carryLimit, int, money, HashMap<int, HashSet<ints>> constraints, int numItems) {
+	public newStore(ArrayList<Item> itemList, int carryLimit, int money, HashMap<int, HashSet<int>> constraints, int numItems) {
 		this.itemList = itemList;
 		this.carryLimit = carryLimit;
 		this.money = money;
