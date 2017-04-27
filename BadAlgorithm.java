@@ -44,7 +44,7 @@ public class BadAlgorithm{
 
 			}
 		}
-		return itemsToBuy
+		return itemsToBuy;
 
 	}
 
