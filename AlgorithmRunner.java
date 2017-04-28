@@ -48,7 +48,7 @@ public class AlgorithmRunner {
 					
 				}
 				
-				// Initialize HashMaps and HashSets for each class
+				// Initialize HashMap and HashSets for each class
 				HashMap<Integer, HashSet<Integer>> constraints = new HashMap<Integer, HashSet<Integer>>();
 				for (int classNum = 0; classNum < numItems; classNum++) {
 					constraints.put(classNum, new HashSet<Integer>());
