@@ -35,7 +35,8 @@ public class BadAlgorithm{
 				moneyLeft -= itemToAdd.getCost();
 				weightLeft -= itemToAdd.getWeight();
 				if (currentConstraints.containsKey(itemToAdd.getClass())) {
-					for (int conflictingClass : currentConstraints.remove(itemToAdd.getClass())) {
+					HashSet<Integer> incomp = currentConstraints.remove(itemToAdd.getClass());
+					for (Integer conflictingClass : incomp) {
 						incompatible.add(conflictingClass);
 					}
 				}

@@ -41,12 +41,14 @@ public class Item implements Comparable<Item>{
 
 	@Override
 	public int compareTo(Item other) {
+		/* For now, higher profit = less then other Item so that you can sort easily
+		and keep removing first item*/
 		if (this.getProfit() - other.getProfit() > 0) {
-			return 1;
-		} else if (this.getProfit() - other.getProfit() == 0) {
 			return -1;
-		} else {
+		} else if (this.getProfit() - other.getProfit() == 0) {
 			return 0;
+		} else {
+			return 1;
 		}
 	}
 }

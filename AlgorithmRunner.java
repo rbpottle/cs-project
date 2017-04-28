@@ -36,7 +36,7 @@ public class AlgorithmRunner {
 				for (int j = 0; j < numItems; j++)   {
 					// splits the line up
 					line = bufferReader.readLine();
-					String stringArray[] = line.split("; ");
+					String stringArray[] = line.replaceAll("\\s","").split(";");
 					
 					// initialize item, add it to the list
 					String name = stringArray[0];
@@ -53,13 +53,14 @@ public class AlgorithmRunner {
 				for (int classNum = 0; classNum < numItems; classNum++) {
 					constraints.put(classNum, new HashSet<Integer>());
 				}
+
 				
 				
 				// Read the lines of constraints
 				for (int j = 0; j < numConstraints; j++)   {
 					// splits the line up
 					line = bufferReader.readLine();
-					String stringArray[] = line.split(", ");
+					String stringArray[] = line.replaceAll("\\s","").split(",");
 					
 					// add to the HashSet for each class
 					for (String currString: stringArray) {
@@ -73,7 +74,6 @@ public class AlgorithmRunner {
 							}
 						}
 					}
-					
 				}
 
 				//Close the buffer reader
