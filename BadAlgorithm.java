@@ -30,15 +30,16 @@ public class BadAlgorithm{
 		Collections.sort(itemsLeft);
 		while (!itemsLeft.isEmpty()) {
 			Item itemToAdd = itemsLeft.remove(0);
-			if (itemToAdd.getWeight() <= weightLeft && itemToAdd.getCost() <= moneyLeft && !incompatible.contains(itemToAdd.getClass())) {
+			if (itemToAdd.getWeight() <= weightLeft && itemToAdd.getCost() <= moneyLeft && !incompatible.contains(itemToAdd.getClassNum())) {
 				itemsToBuy.add(itemToAdd);
 				moneyLeft -= itemToAdd.getCost();
 				weightLeft -= itemToAdd.getWeight();
-				if (currentConstraints.containsKey(itemToAdd.getClass())) {
-					HashSet<Integer> incomp = currentConstraints.remove(itemToAdd.getClass());
+				if (currentConstraints.containsKey(itemToAdd.getClassNum())) {
+					HashSet<Integer> incomp = currentConstraints.get(itemToAdd.getClassNum());
 					for (Integer conflictingClass : incomp) {
 						incompatible.add(conflictingClass);
 					}
+					currentConstraints.remove(itemToAdd.getClassNum());
 				}
 
 			}
