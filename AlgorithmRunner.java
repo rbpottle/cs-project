@@ -10,7 +10,7 @@ public class AlgorithmRunner {
 	public static void main(String[] args) {
 		
 		int numProblems = 21; // adjust this for however many number of problems there are
-		for (int i = 1; i <= numProblems; i++) {
+		for (int i = 5; i <= numProblems; i++) {
 			System.out.println("reading from problem" + i);
 			
 			String fileName="project_instances/problem" + i + ".in";
@@ -97,12 +97,12 @@ public class AlgorithmRunner {
 				greedyPCR.newStore(tempItemList1, pounds, dollars, constraints, numItems);
 				ArrayList<Item> itemsPCR = greedyPCR.runAlgorithm();
 				double totalProfitPCR = 0.0;
-	            for (Item currItem: itemsPCR) {
-	            	totalProfitPCR += currItem.getProfit();
-	            }
+				for (Item currItem: itemsPCR) {
+					totalProfitPCR += currItem.getProfit();
+				}
 
-	            // greedy based on only profit
-	            BadAlgorithm greedyProfit = new BadAlgorithm();
+				// greedy based on only profit
+				BadAlgorithm greedyProfit = new BadAlgorithm();
 				ArrayList<Item> tempItemList2 = new ArrayList<Item>();
 				for (Item currItem: itemList) {
 					String name = currItem.getName();
@@ -115,15 +115,15 @@ public class AlgorithmRunner {
 				greedyProfit.newStore(tempItemList2, pounds, dollars, constraints, numItems);
 				ArrayList<Item> items2 = greedyProfit.runAlgorithm();
 				double totalProfit2 = 0.0;
-	            for (Item currItem: items2) {
-	            	totalProfit2 += currItem.getProfit();
-	            }
+				for (Item currItem: items2) {
+					totalProfit2 += currItem.getProfit();
+				}
 
-	            // literally random (done 50 times)
-	            double totalProfitRandom = 0.0;
-	            ArrayList<Item> itemsRandom = new ArrayList<Item>();
-	            for (int k = 0; k < 50; k++) {
-	            	RandomAlgorithm randomAlgo = new RandomAlgorithm();
+				// literally random (done 50 times)
+				double totalProfitRandom = 0.0;
+				ArrayList<Item> itemsRandom = new ArrayList<Item>();
+				for (int k = 0; k < 50; k++) {
+					RandomAlgorithm randomAlgo = new RandomAlgorithm();
 					ArrayList<Item> tempItemList3 = new ArrayList<Item>();
 					for (Item currItem: itemList) {
 						String name = currItem.getName();
@@ -136,77 +136,74 @@ public class AlgorithmRunner {
 					randomAlgo.newStore(tempItemList3, pounds, dollars, constraints, numItems);
 					ArrayList<Item> items3 = randomAlgo.runAlgorithm();
 					double totalProfit3 = 0.0;
-		            for (Item currItem: items3) {
-		            	totalProfit3 += currItem.getProfit();
-		            }
-		            
-		            if (totalProfit3 > totalProfitRandom) {
-		            	totalProfitRandom = totalProfit3;
-		            	itemsRandom = items3;
-		            	
-		            }
-		            
-	            }
-	            
-	            
-	            
-	            
-	            // initialize the largest profit as well as the corresponding items
-	            ArrayList<Item> itemsToBuy = itemsPCR; // temporarily sets to avoid errors
+					for (Item currItem: items3) {
+						totalProfit3 += currItem.getProfit();
+					}
+
+					if (totalProfit3 > totalProfitRandom) {
+						totalProfitRandom = totalProfit3;
+						itemsRandom = items3;
+						
+					}
+
+				}
+
+				
+				// initialize the largest profit as well as the corresponding items
+				ArrayList<Item> itemsToBuy = itemsPCR; // temporarily sets to avoid errors
 				double highestProfit = totalProfitPCR;
-	            
-	            // compare the profit of the algorithms
+
+				// compare the profit of the algorithms
 				System.out.println("PCR profit is: " + totalProfitPCR);				
 				System.out.println("ProfitGreedy profit is: " + totalProfit2);
 				System.out.println("Random order profit is: " + totalProfitRandom);
-	            if (totalProfitPCR > totalProfit2) {
-	            	itemsToBuy = itemsPCR;
-	            	highestProfit = totalProfitPCR;
-	            } else {
-	            	itemsToBuy = items2;
-	            	highestProfit = totalProfit2;
-	            }
-	            
-	            if (totalProfitRandom> highestProfit) {
-	            	itemsToBuy = itemsRandom;
-	            	highestProfit = totalProfitRandom;            	
-	            }
-	            
-	            if (highestProfit == totalProfitPCR) {
-	            	System.out.println("PCR has the most profit of: " + highestProfit);
-	            } else if (highestProfit == totalProfit2) {
-	            	System.out.println("ProfitGreedy has the most profit of: " + highestProfit);
-	            } else {
-	            	System.out.println("Random order has the most profit of: " + highestProfit);
-	            }
-	            
-				
+				if (totalProfitPCR > totalProfit2) {
+					itemsToBuy = itemsPCR;
+					highestProfit = totalProfitPCR;
+				} else {
+					itemsToBuy = items2;
+					highestProfit = totalProfit2;
+				}
+
+				if (totalProfitRandom> highestProfit) {
+					itemsToBuy = itemsRandom;
+					highestProfit = totalProfitRandom;            	
+				}
+
+				if (highestProfit == totalProfitPCR) {
+					System.out.println("PCR has the most profit of: " + highestProfit);
+				} else if (highestProfit == totalProfit2) {
+					System.out.println("ProfitGreedy has the most profit of: " + highestProfit);
+				} else {
+					System.out.println("Random order has the most profit of: " + highestProfit);
+				}
+
 				
 				// -------------------- FOR THE OUTPUT FILE BELOW -------------------- \\
 				
 				//choose file name here
 				PrintWriter writer = null;
-		        try {
-		            //choose file name here
-		            writer = new PrintWriter("output/problem" + i + ".out"); // i is still the problem number lol
-		            
-		            
-		            for (Item currItem: itemsToBuy) {
-		            	writer.write(currItem.getName() + "\r\n");
+				try {
+					//choose file name here
+					writer = new PrintWriter("output/problem" + i + ".out"); // i is still the problem number lol
 
-		            }
+					
+					for (Item currItem: itemsToBuy) {
+						writer.write(currItem.getName() + "\r\n");
 
-		            // System.out.println("finished writing output file");
-		            
-		        } catch (Exception e) {
-		            e.printStackTrace();
-		        } finally {
-		            try {
-		                // Close the writer regardless of what happens...
-		                writer.close();
-		            } catch (Exception e) {
-		            }
-		        }
+					}
+
+					// System.out.println("finished writing output file");
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						// Close the writer regardless of what happens...
+						writer.close();
+					} catch (Exception e) {
+					}
+				}
 				
 			}catch(Exception e){
 				System.out.println("Error while reading file line by line:" + e.getMessage());                      
