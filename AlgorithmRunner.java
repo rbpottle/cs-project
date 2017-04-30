@@ -77,13 +77,56 @@ public class AlgorithmRunner {
 				}
 
 				//Close the buffer reader
-				System.out.println("finished reading the input file...");
+				// System.out.println("finished reading the input file...");
 				bufferReader.close();
 				
 				// -------------------- FOR RUNNING THE ALGORITHM -------------------- \\
-				BadAlgorithm algorithm = new BadAlgorithm();
-				algorithm.newStore(itemList, pounds, dollars, constraints, numItems);
-				ArrayList<Item> itemsToBuy = algorithm.runAlgorithm();
+				
+				
+				//initialize and run each algorithm 
+				BadAlgorithm greedyPCR = new BadAlgorithm();
+				ArrayList<Item> tempItemList1 = new ArrayList<Item>();
+				for (Item currItem: itemList) {
+					tempItemList1.add(currItem);
+				}
+				greedyPCR.newStore(tempItemList1, pounds, dollars, constraints, numItems);
+				ArrayList<Item> itemsPCR = greedyPCR.runAlgorithm();
+				double totalProfitPCR = 0.0;
+	            for (Item currItem: itemsPCR) {
+	            	totalProfitPCR += currItem.getProfit();
+	            }
+				
+	            
+	            ProfitGreedy profitGreedy = new ProfitGreedy();
+	            ArrayList<Item> tempItemList2 = new ArrayList<Item>();
+				for (Item currItem: itemList) {
+					tempItemList2.add(currItem);
+				}
+				profitGreedy.newStore(tempItemList2, pounds, dollars, constraints, numItems);
+				ArrayList<Item> itemsProfitGreedy = profitGreedy.runAlgorithm();
+				double totalProfitGreedy = 0.0;
+	            for (Item currItem: itemsProfitGreedy) {
+	            	totalProfitGreedy += currItem.getProfit();
+	            }
+	            
+	            // initialize the largest profit as well as the corresponding items
+	            ArrayList<Item> itemsToBuy = itemsPCR; // temporarily sets to avoid errors
+				double totalProfit;
+	            
+	            // compare the profit of the algorithms
+				System.out.println("PCR profit is: " + totalProfitPCR);
+				
+				System.out.println("ProfitGreedy profit is: " + totalProfitGreedy);
+	            if (totalProfitPCR > totalProfitGreedy) {
+	            	itemsToBuy = itemsPCR;
+	            	totalProfit = totalProfitPCR;
+	            	System.out.println("PCR has the most profit of: " + totalProfit);
+	            } else {
+	            	itemsToBuy = itemsProfitGreedy;
+	            	totalProfit = totalProfitGreedy;
+	            	System.out.println("ProfitGreedy has the most profit of: " + totalProfit);
+	            }
+	            
 				
 				
 				// -------------------- FOR THE OUTPUT FILE BELOW -------------------- \\
@@ -94,17 +137,13 @@ public class AlgorithmRunner {
 		            //choose file name here
 		            writer = new PrintWriter("output/problem" + i + ".out"); // i is still the problem number lol
 		            
-		            double totalProfit = 0.0;
 		            
 		            for (Item currItem: itemsToBuy) {
 		            	writer.write(currItem.getName() + "\r\n");
-		            	totalProfit += currItem.getProfit();
-		            	
-		            	// System.out.println("added item: " + currItem.getName());
+
 		            }
-		           
-		            System.out.println("total profit is: " + totalProfit);
-		            System.out.println("finished writing output file");
+
+		            // System.out.println("finished writing output file");
 		            
 		        } catch (Exception e) {
 		            e.printStackTrace();

@@ -27,7 +27,9 @@ public class BadAlgorithm{
 		double weightLeft = carryLimit;
 		HashSet<Integer> incompatible = new HashSet<Integer>();
 		ArrayList<Item> itemsToBuy = new ArrayList<Item>();
+		
 		Collections.sort(itemsLeft);
+		
 		while (!itemsLeft.isEmpty()) {
 			Item itemToAdd = itemsLeft.remove(0);
 			if (itemToAdd.getWeight() <= weightLeft && itemToAdd.getCost() <= moneyLeft && !incompatible.contains(itemToAdd.getClassNum())) {
