@@ -55,7 +55,6 @@ public class AlgorithmRunner {
 				}
 
 				
-				
 				// Read the lines of constraints
 				for (int j = 0; j < numConstraints; j++)   {
 					// splits the line up
@@ -82,8 +81,8 @@ public class AlgorithmRunner {
 				
 				// -------------------- FOR RUNNING THE ALGORITHM -------------------- \\
 				
-				
 				//initialize and run each algorithm 
+
 				BadAlgorithm greedyPCR = new BadAlgorithm();
 				ArrayList<Item> tempItemList1 = new ArrayList<Item>();
 				for (Item currItem: itemList) {
@@ -100,40 +99,39 @@ public class AlgorithmRunner {
 	            for (Item currItem: itemsPCR) {
 	            	totalProfitPCR += currItem.getProfit();
 	            }
-				
-	            
-	            BadAlgorithm profitGreedy = new BadAlgorithm();
-	            ArrayList<Item> tempItemList2 = new ArrayList<Item>();
+
+
+	            BadAlgorithm greedyPCR2 = new BadAlgorithm();
+				ArrayList<Item> tempItemList2 = new ArrayList<Item>();
 				for (Item currItem: itemList) {
 					String name = currItem.getName();
 					int classNum = currItem.getClassNum();
 					double weight = currItem.getWeight();
 					double cost = currItem.getCost();
 					double resale = currItem.getResale();
-					tempItemList2.add(new Item(name, classNum, weight, cost, resale));
+					tempItemList2.add(new ItemProfitGreedy(name, classNum, weight, cost, resale));
 				}
-				profitGreedy.newStore(tempItemList2, pounds, dollars, constraints, numItems);
-				ArrayList<Item> itemsProfitGreedy = profitGreedy.runAlgorithm();
-				double totalProfitGreedy = 0.0;
-	            for (Item currItem: itemsProfitGreedy) {
-	            	totalProfitGreedy += currItem.getProfit();
+				greedyPCR2.newStore(tempItemList2, pounds, dollars, constraints, numItems);
+				ArrayList<Item> itemsPCR2 = greedyPCR2.runAlgorithm();
+				double totalProfitPCR2 = 0.0;
+	            for (Item currItem: itemsPCR2) {
+	            	totalProfitPCR2 += currItem.getProfit();
 	            }
-	            
+
 	            // initialize the largest profit as well as the corresponding items
 	            ArrayList<Item> itemsToBuy = itemsPCR; // temporarily sets to avoid errors
 				double totalProfit;
 	            
 	            // compare the profit of the algorithms
-				System.out.println("PCR profit is: " + totalProfitPCR);
-				
-				System.out.println("ProfitGreedy profit is: " + totalProfitGreedy);
-	            if (totalProfitPCR > totalProfitGreedy) {
+				System.out.println("PCR profit is: " + totalProfitPCR);				
+				System.out.println("ProfitGreedy profit is: " + totalProfitPCR2);
+	            if (totalProfitPCR > totalProfitPCR2) {
 	            	itemsToBuy = itemsPCR;
 	            	totalProfit = totalProfitPCR;
 	            	System.out.println("PCR has the most profit of: " + totalProfit);
 	            } else {
-	            	itemsToBuy = itemsProfitGreedy;
-	            	totalProfit = totalProfitGreedy;
+	            	itemsToBuy = itemsPCR2;
+	            	totalProfit = totalProfitPCR2;
 	            	System.out.println("ProfitGreedy has the most profit of: " + totalProfit);
 	            }
 	            

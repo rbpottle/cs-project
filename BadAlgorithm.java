@@ -21,7 +21,22 @@ public class BadAlgorithm{
 	}
 
 	public ArrayList<Item> runAlgorithm() {
-		HashMap<Integer, HashSet<Integer>> currentConstraints = this.constraints;
+		HashMap<Integer, HashSet<Integer>> currentConstraints = new HashMap<Integer, HashSet<Integer>>();
+		for (int classNum = 0; classNum < numItems; classNum++) {
+			currentConstraints.put(classNum, new HashSet<Integer>());
+		}
+		
+		for (int currClass = 0; currClass < constraints.size(); currClass++)   {
+			HashSet<Integer> originalHashSet = constraints.get(currClass);
+			HashSet<Integer> currHashSet = currentConstraints.get(currClass);
+			for (int i: originalHashSet) {
+				currHashSet.add(i);
+				
+			}
+		}
+		
+		
+		
 		ArrayList<Item> itemsLeft = itemList;
 		double moneyLeft = money;
 		double weightLeft = carryLimit;
