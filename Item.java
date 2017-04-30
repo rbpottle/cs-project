@@ -48,7 +48,7 @@ public class Item implements Comparable<Item>{
 		/* For now, higher profit = less then other Item so that you can sort easily
 		and keep removing first item*/
 		
-		
+		/*
 		if (this.getPCR() - other.getPCR() > 0) {
 			return -1;
 		} else if (this.getPCR() - other.getPCR() == 0) {
@@ -57,7 +57,7 @@ public class Item implements Comparable<Item>{
 			return 1;
 		}
 		
-		/*
+		*/
 		if (this.getProfit() - other.getProfit() > 0) {
 			return -1;
 		} else if (this.getProfit() - other.getProfit() == 0) {
@@ -65,6 +65,6 @@ public class Item implements Comparable<Item>{
 		} else {
 			return 1;
 		}
-		*/
+		
 	}
 }
