@@ -87,7 +87,12 @@ public class AlgorithmRunner {
 				BadAlgorithm greedyPCR = new BadAlgorithm();
 				ArrayList<Item> tempItemList1 = new ArrayList<Item>();
 				for (Item currItem: itemList) {
-					tempItemList1.add(currItem);
+					String name = currItem.getName();
+					int classNum = currItem.getClassNum();
+					double weight = currItem.getWeight();
+					double cost = currItem.getCost();
+					double resale = currItem.getResale();
+					tempItemList1.add(new Item(name, classNum, weight, cost, resale));
 				}
 				greedyPCR.newStore(tempItemList1, pounds, dollars, constraints, numItems);
 				ArrayList<Item> itemsPCR = greedyPCR.runAlgorithm();
@@ -97,10 +102,15 @@ public class AlgorithmRunner {
 	            }
 				
 	            
-	            ProfitGreedy profitGreedy = new ProfitGreedy();
+	            BadAlgorithm profitGreedy = new BadAlgorithm();
 	            ArrayList<Item> tempItemList2 = new ArrayList<Item>();
 				for (Item currItem: itemList) {
-					tempItemList2.add(currItem);
+					String name = currItem.getName();
+					int classNum = currItem.getClassNum();
+					double weight = currItem.getWeight();
+					double cost = currItem.getCost();
+					double resale = currItem.getResale();
+					tempItemList2.add(new Item(name, classNum, weight, cost, resale));
 				}
 				profitGreedy.newStore(tempItemList2, pounds, dollars, constraints, numItems);
 				ArrayList<Item> itemsProfitGreedy = profitGreedy.runAlgorithm();

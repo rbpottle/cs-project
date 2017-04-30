@@ -12,7 +12,7 @@ public class ProfitGreedy {
 	private int numItems;
 	private ArrayList<Item> itemsLeft;
 
-	public ProfitGreedy() {
+	public ProfitGreedy(){
 
 	}
 
@@ -31,10 +31,10 @@ public class ProfitGreedy {
 		double weightLeft = carryLimit;
 		HashSet<Integer> incompatible = new HashSet<Integer>();
 		ArrayList<Item> itemsToBuy = new ArrayList<Item>();
-
+		
 		mergeSort(itemsLeft);
 		Collections.reverse(itemsLeft);
-
+		
 		while (!itemsLeft.isEmpty()) {
 			Item itemToAdd = itemsLeft.remove(0);
 			if (itemToAdd.getWeight() <= weightLeft && itemToAdd.getCost() <= moneyLeft && !incompatible.contains(itemToAdd.getClassNum())) {
@@ -81,7 +81,7 @@ public class ProfitGreedy {
         int rightIndex = midIndex+1;
          
         while(leftIndex<=midIndex && rightIndex<=endIndex){
-            if(itemsLeft.get(leftIndex).getProfit() <= itemsLeft.get(rightIndex).getProfit()){
+            if(itemsLeft.get(leftIndex).getProfit() < itemsLeft.get(rightIndex).getProfit()){
                 mergedSortedArray.add(itemsLeft.get(leftIndex));
                 leftIndex++;
             }else{
