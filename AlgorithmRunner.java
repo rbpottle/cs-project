@@ -102,7 +102,7 @@ public class AlgorithmRunner {
 	            }
 
 	            // greedy based on only profit
-	            BadAlgorithm greedyPCR2 = new BadAlgorithm();
+	            BadAlgorithm greedyProfit = new BadAlgorithm();
 				ArrayList<Item> tempItemList2 = new ArrayList<Item>();
 				for (Item currItem: itemList) {
 					String name = currItem.getName();
@@ -112,30 +112,42 @@ public class AlgorithmRunner {
 					double resale = currItem.getResale();
 					tempItemList2.add(new ItemProfitGreedy(name, classNum, weight, cost, resale));
 				}
-				greedyPCR2.newStore(tempItemList2, pounds, dollars, constraints, numItems);
-				ArrayList<Item> itemsPCR2 = greedyPCR2.runAlgorithm();
-				double totalProfitPCR2 = 0.0;
-	            for (Item currItem: itemsPCR2) {
-	            	totalProfitPCR2 += currItem.getProfit();
+				greedyProfit.newStore(tempItemList2, pounds, dollars, constraints, numItems);
+				ArrayList<Item> items2 = greedyProfit.runAlgorithm();
+				double totalProfit2 = 0.0;
+	            for (Item currItem: items2) {
+	            	totalProfit2 += currItem.getProfit();
 	            }
 
-	            // greedy based on only profit
-	            RandomAlgorithm randomAlgo = new RandomAlgorithm();
-				ArrayList<Item> tempItemList3 = new ArrayList<Item>();
-				for (Item currItem: itemList) {
-					String name = currItem.getName();
-					int classNum = currItem.getClassNum();
-					double weight = currItem.getWeight();
-					double cost = currItem.getCost();
-					double resale = currItem.getResale();
-					tempItemList3.add(new Item(name, classNum, weight, cost, resale));
-				}
-				randomAlgo.newStore(tempItemList3, pounds, dollars, constraints, numItems);
-				ArrayList<Item> items3 = randomAlgo.runAlgorithm();
-				double totalProfit3 = 0.0;
-	            for (Item currItem: items3) {
-	            	totalProfit3 += currItem.getProfit();
+	            // literally random (done 50 times)
+	            double totalProfitRandom = 0.0;
+	            ArrayList<Item> itemsRandom = new ArrayList<Item>();
+	            for (int k = 0; k < 50; k++) {
+	            	RandomAlgorithm randomAlgo = new RandomAlgorithm();
+					ArrayList<Item> tempItemList3 = new ArrayList<Item>();
+					for (Item currItem: itemList) {
+						String name = currItem.getName();
+						int classNum = currItem.getClassNum();
+						double weight = currItem.getWeight();
+						double cost = currItem.getCost();
+						double resale = currItem.getResale();
+						tempItemList3.add(new Item(name, classNum, weight, cost, resale));
+					}
+					randomAlgo.newStore(tempItemList3, pounds, dollars, constraints, numItems);
+					ArrayList<Item> items3 = randomAlgo.runAlgorithm();
+					double totalProfit3 = 0.0;
+		            for (Item currItem: items3) {
+		            	totalProfit3 += currItem.getProfit();
+		            }
+		            
+		            if (totalProfit3 > totalProfitRandom) {
+		            	totalProfitRandom = totalProfit3;
+		            	itemsRandom = items3;
+		            	
+		            }
+		            
 	            }
+	            
 	            
 	            
 	            
@@ -145,21 +157,26 @@ public class AlgorithmRunner {
 	            
 	            // compare the profit of the algorithms
 				System.out.println("PCR profit is: " + totalProfitPCR);				
-				System.out.println("ProfitGreedy profit is: " + totalProfitPCR2);
-				System.out.println("Random order profit is: " + totalProfit3);
-	            if (totalProfitPCR > totalProfitPCR2) {
+				System.out.println("ProfitGreedy profit is: " + totalProfit2);
+				System.out.println("Random order profit is: " + totalProfitRandom);
+	            if (totalProfitPCR > totalProfit2) {
 	            	itemsToBuy = itemsPCR;
 	            	highestProfit = totalProfitPCR;
-	            	System.out.println("PCR has the most profit of: " + highestProfit);
 	            } else {
-	            	itemsToBuy = itemsPCR2;
-	            	highestProfit = totalProfitPCR2;
-	            	System.out.println("ProfitGreedy has the most profit of: " + highestProfit);
+	            	itemsToBuy = items2;
+	            	highestProfit = totalProfit2;
 	            }
 	            
-	            if (totalProfit3> highestProfit) {
-	            	itemsToBuy = items3;
-	            	highestProfit = totalProfit3;
+	            if (totalProfitRandom> highestProfit) {
+	            	itemsToBuy = itemsRandom;
+	            	highestProfit = totalProfitRandom;            	
+	            }
+	            
+	            if (highestProfit == totalProfitPCR) {
+	            	System.out.println("PCR has the most profit of: " + highestProfit);
+	            } else if (highestProfit == totalProfit2) {
+	            	System.out.println("ProfitGreedy has the most profit of: " + highestProfit);
+	            } else {
 	            	System.out.println("Random order has the most profit of: " + highestProfit);
 	            }
 	            
