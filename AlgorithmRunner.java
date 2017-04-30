@@ -10,7 +10,7 @@ public class AlgorithmRunner {
 	public static void main(String[] args) {
 		
 		int numProblems = 21; // adjust this for however many number of problems there are
-		for (int i = 5; i <= numProblems; i++) {
+		for (int i = 1; i <= numProblems; i++) {
 			System.out.println("reading from problem" + i);
 			
 			String fileName="project_instances/problem" + i + ".in";
