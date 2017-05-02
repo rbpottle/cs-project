@@ -27,15 +27,20 @@ public class RandomAlgorithm{
 	public ArrayList<Item> runAlgorithm() {
 		HashMap<Integer, HashSet<Integer>> currentConstraints = new HashMap<Integer, HashSet<Integer>>();
 		for (int classNum = 0; classNum < numItems; classNum++) {
-			currentConstraints.put(classNum, new HashSet<Integer>());
+			if (constraints.containsKey(classNum)) {
+				currentConstraints.put(classNum, new HashSet<Integer>());
+			}
 		}
-		
-		for (int currClass = 0; currClass < constraints.size(); currClass++)   {
-			HashSet<Integer> originalHashSet = constraints.get(currClass);
-			HashSet<Integer> currHashSet = currentConstraints.get(currClass);
-			for (int i: originalHashSet) {
-				currHashSet.add(i);
-				
+		for (int currClass = 0; currClass < numItems; currClass++)   {
+			if (constraints.containsKey(currClass)) {
+				HashSet<Integer> originalHashSet = constraints.get(currClass);
+				HashSet<Integer> currHashSet = currentConstraints.get(currClass);
+				for (int currInt = 0; currInt < originalHashSet.size(); currInt++) {
+					if (originalHashSet.contains(currInt)) {
+						currHashSet.add(currInt);
+					}
+					
+				}
 			}
 		}
 		

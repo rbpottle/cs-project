@@ -10,7 +10,7 @@ public class AlgorithmRunner {
 	public static void main(String[] args) {
 		
 		int numProblems = 21; // adjust this for however many number of problems there are
-		for (int i = 5; i <= numProblems; i++) {
+		for (int i = 1; i <= numProblems; i++) {
 			System.out.println("reading from problem" + i);
 			
 			String fileName="project_instances/problem" + i + ".in";
@@ -54,6 +54,7 @@ public class AlgorithmRunner {
 					constraints.put(classNum, new HashSet<Integer>());
 				}
 
+				System.out.println("size of constraints is: " + constraints.size());
 				
 				// Read the lines of constraints
 				for (int j = 0; j < numConstraints; j++)   {
@@ -74,9 +75,19 @@ public class AlgorithmRunner {
 						}
 					}
 				}
+				
+				// remove unnecessary key value pairs
+				for (int classNum = 0; classNum < numItems; classNum++) {
+					HashSet<Integer> currHashSet = constraints.get(classNum);
+					if (currHashSet.isEmpty()) {
+						constraints.remove(classNum);
+					}
+				}
+
+				System.out.println("size of constraints is: " + constraints.size());
 
 				//Close the buffer reader
-				// System.out.println("finished reading the input file...");
+				System.out.println("finished reading the input file...");
 				bufferReader.close();
 				
 				// -------------------- FOR RUNNING THE ALGORITHM -------------------- \\
@@ -101,6 +112,7 @@ public class AlgorithmRunner {
 					totalProfitPCR += currItem.getProfit();
 				}
 
+				System.out.println("PCR finished");
 				// greedy based on only profit
 				BadAlgorithm greedyProfit = new BadAlgorithm();
 				ArrayList<Item> tempItemList2 = new ArrayList<Item>();
@@ -119,9 +131,11 @@ public class AlgorithmRunner {
 					totalProfit2 += currItem.getProfit();
 				}
 
+				System.out.println("ProfitGreedy finished");
 				// literally random (done 50 times)
 				double totalProfitRandom = 0.0;
 				ArrayList<Item> itemsRandom = new ArrayList<Item>();
+				
 				for (int k = 0; k < 50; k++) {
 					RandomAlgorithm randomAlgo = new RandomAlgorithm();
 					ArrayList<Item> tempItemList3 = new ArrayList<Item>();
@@ -133,8 +147,11 @@ public class AlgorithmRunner {
 						double resale = currItem.getResale();
 						tempItemList3.add(new Item(name, classNum, weight, cost, resale));
 					}
+					
 					randomAlgo.newStore(tempItemList3, pounds, dollars, constraints, numItems);
+					
 					ArrayList<Item> items3 = randomAlgo.runAlgorithm();
+					
 					double totalProfit3 = 0.0;
 					for (Item currItem: items3) {
 						totalProfit3 += currItem.getProfit();
@@ -147,14 +164,14 @@ public class AlgorithmRunner {
 					}
 
 				}
-
+				System.out.println("random finished");
 				
 				// initialize the largest profit as well as the corresponding items
 				ArrayList<Item> itemsToBuy = itemsPCR; // temporarily sets to avoid errors
 				double highestProfit = totalProfitPCR;
 
 				// compare the profit of the algorithms
-				System.out.println("PCR profit is: " + totalProfitPCR);				
+				System.out.println("PCR profit is: " + totalProfitPCR);
 				System.out.println("ProfitGreedy profit is: " + totalProfit2);
 				System.out.println("Random order profit is: " + totalProfitRandom);
 				if (totalProfitPCR > totalProfit2) {
