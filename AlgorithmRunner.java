@@ -121,12 +121,30 @@ public class AlgorithmRunner {
 				}
 				System.out.println("ProfitGreedy finished");
 				
+				// greedy based on a heuristic
+				BadAlgorithm greedyH = new BadAlgorithm();
+				ArrayList<Item> tempItemListH = new ArrayList<Item>();
+				for (Item currItem: itemList) {
+					String name = currItem.getName();
+					int classNum = currItem.getClassNum();
+					double weight = currItem.getWeight();
+					double cost = currItem.getCost();
+					double resale = currItem.getResale();
+					tempItemListH.add(new ItemHeuristic(name, classNum, weight, cost, resale));
+				}
+				greedyH.newStore(tempItemListH, pounds, dollars, constraints, numItems);
+				ArrayList<Item> itemsH = greedyH.runAlgorithm();
+				double totalProfitH = 0.0;
+				for (Item currItem: itemsH) {
+					totalProfitH += currItem.getProfit();
+				}
+				System.out.println("ProfitHeuristic finished");
 				
 				// literally random (done 50 times)
 				double totalProfitRandom = 0.0;
 				ArrayList<Item> itemsRandom = new ArrayList<Item>();
 				
-				int l = 20;
+				int l = 25;
 				if (i == 4) {
 					l = 0;
 				}
@@ -168,7 +186,9 @@ public class AlgorithmRunner {
 				
 				System.out.println("PCR profit is: " + totalProfitPCR);
 				System.out.println("ProfitGreedy profit is: " + totalProfit2);
+				System.out.println("HeuristicGreedy profit is: " + totalProfitH);
 				System.out.println("Random order profit is: " + totalProfitRandom);
+				
 				
 				if (totalProfitPCR > totalProfit2) {
 					itemsToBuy = itemsPCR;
@@ -181,6 +201,10 @@ public class AlgorithmRunner {
 					itemsToBuy = itemsRandom;
 					highestProfit = totalProfitRandom;
 				}
+				if (totalProfitH> highestProfit) {
+					itemsToBuy = itemsH;
+					highestProfit = totalProfitH;
+				}
 
 
 				if (highestProfit == totalProfitPCR) {
@@ -189,6 +213,8 @@ public class AlgorithmRunner {
 					System.out.println("ProfitGreedy has the most profit of: " + highestProfit);
 				} else if (highestProfit == totalProfitRandom) {
 					System.out.println("Random order has the most profit of: " + highestProfit);
+				} else if (highestProfit == totalProfitH) {
+					System.out.println("Greedy Heuristic has the most profit of: " + highestProfit);
 				}
 
 				

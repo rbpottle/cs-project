@@ -6,6 +6,7 @@ public class Item implements Comparable<Item>{
 	private double weight;
 	private double cost;
 	private double resale;
+	private double heuristic;
 
 	public Item(String name, int classNum, double weight, double cost, double resale){
 		this.name = name;
@@ -42,6 +43,10 @@ public class Item implements Comparable<Item>{
 	public double getPCR() {
 		return (resale - cost)/weight;
 	}
+	
+	public double getHeuristic() {
+		return heuristic;
+	}
 
 	@Override
 	public int compareTo(Item other) {
@@ -59,4 +64,5 @@ public class Item implements Comparable<Item>{
 
 		
 	}
+
 }
