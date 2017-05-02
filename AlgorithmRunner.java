@@ -75,22 +75,11 @@ public class AlgorithmRunner {
 						}
 					}
 				}
-				
-				// remove unnecessary key value pairs
-				for (int classNum = 0; classNum < numItems; classNum++) {
-					HashSet<Integer> currHashSet = constraints.get(classNum);
-					if (currHashSet.isEmpty()) {
-						constraints.remove(classNum);
-					}
-				}
-
-				System.out.println("size of constraints is: " + constraints.size());
-
 				//Close the buffer reader
 				System.out.println("finished reading the input file...");
 				bufferReader.close();
 				
-				// -------------------- FOR RUNNING THE ALGORITHM -------------------- \\
+				// -------------------- FOR RUNNING THE ALGORITHMS -------------------- \\
 				
 				//initialize and run each algorithm 
 
@@ -111,8 +100,8 @@ public class AlgorithmRunner {
 				for (Item currItem: itemsPCR) {
 					totalProfitPCR += currItem.getProfit();
 				}
-
 				System.out.println("PCR finished");
+				
 				// greedy based on only profit
 				BadAlgorithm greedyProfit = new BadAlgorithm();
 				ArrayList<Item> tempItemList2 = new ArrayList<Item>();
@@ -130,13 +119,18 @@ public class AlgorithmRunner {
 				for (Item currItem: items2) {
 					totalProfit2 += currItem.getProfit();
 				}
-
 				System.out.println("ProfitGreedy finished");
+				
+				
 				// literally random (done 50 times)
 				double totalProfitRandom = 0.0;
 				ArrayList<Item> itemsRandom = new ArrayList<Item>();
 				
-				for (int k = 0; k < 50; k++) {
+				int l = 20;
+				if (i == 4) {
+					l = 0;
+				}
+				for (int k = 0; k < l; k++) {
 					RandomAlgorithm randomAlgo = new RandomAlgorithm();
 					ArrayList<Item> tempItemList3 = new ArrayList<Item>();
 					for (Item currItem: itemList) {
@@ -171,9 +165,11 @@ public class AlgorithmRunner {
 				double highestProfit = totalProfitPCR;
 
 				// compare the profit of the algorithms
+				
 				System.out.println("PCR profit is: " + totalProfitPCR);
 				System.out.println("ProfitGreedy profit is: " + totalProfit2);
 				System.out.println("Random order profit is: " + totalProfitRandom);
+				
 				if (totalProfitPCR > totalProfit2) {
 					itemsToBuy = itemsPCR;
 					highestProfit = totalProfitPCR;
@@ -181,17 +177,17 @@ public class AlgorithmRunner {
 					itemsToBuy = items2;
 					highestProfit = totalProfit2;
 				}
-
 				if (totalProfitRandom> highestProfit) {
 					itemsToBuy = itemsRandom;
-					highestProfit = totalProfitRandom;            	
+					highestProfit = totalProfitRandom;
 				}
+
 
 				if (highestProfit == totalProfitPCR) {
 					System.out.println("PCR has the most profit of: " + highestProfit);
 				} else if (highestProfit == totalProfit2) {
 					System.out.println("ProfitGreedy has the most profit of: " + highestProfit);
-				} else {
+				} else if (highestProfit == totalProfitRandom) {
 					System.out.println("Random order has the most profit of: " + highestProfit);
 				}
 
@@ -210,7 +206,7 @@ public class AlgorithmRunner {
 
 					}
 
-					// System.out.println("finished writing output file");
+					System.out.println("finished writing output file");
 
 				} catch (Exception e) {
 					e.printStackTrace();
