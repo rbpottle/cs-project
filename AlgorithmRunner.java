@@ -9,11 +9,11 @@ import java.util.Random;
 public class AlgorithmRunner {
 	public static void main(String[] args) {
 		
-		int numProblems = 21; // adjust this for however many number of problems there are
-		for (int i = 1; i <= numProblems; i++) {
+		int numProblems = 980; // adjust this for however many number of problems there are
+		for (int i = 72; i <= numProblems; i++) {
 			System.out.println("reading from problem" + i);
 			
-			String fileName="project_instances/problem" + i + ".in";
+			String fileName="project_instances_ec/problem" + i + ".in";
 			try{
 				// -------------------- FOR READING INPUT FILE -------------------- \\
 				
@@ -26,10 +26,18 @@ public class AlgorithmRunner {
 				//Variable to hold the one line data
 				String line;
 				
-				double pounds = Double.parseDouble(bufferReader.readLine());
-				double dollars = Double.parseDouble(bufferReader.readLine());
-				int numItems = Integer.parseInt(bufferReader.readLine());
-				int numConstraints = Integer.parseInt(bufferReader.readLine());
+				line = bufferReader.readLine();
+				line.replaceAll("\\s","");
+				double pounds = Double.parseDouble(line);
+				line = bufferReader.readLine();
+				line.replaceAll("\\s","");
+				double dollars = Double.parseDouble(line);
+				line = bufferReader.readLine();
+				line.replaceAll("\\s","");
+				int numItems = Integer.parseInt(line);
+				line = bufferReader.readLine();
+				line.replaceAll("\\s","");
+				int numConstraints = Integer.parseInt(line);
 				
 				// Read the lines of items
 				ArrayList<Item> itemList = new ArrayList<Item>();
@@ -165,7 +173,6 @@ public class AlgorithmRunner {
 				}
 				algoGC.newStore(tempItemListGC, pounds, dollars, constraints, numItems);
 				ArrayList<Item> itemsGC = algoGC.greedyClasses();
-
 				double totalResaleGC = 0.0;
 				double totalCostGC = 0.0;
 				for (Item currItem: itemsGC) {
@@ -175,11 +182,32 @@ public class AlgorithmRunner {
 				double totalGC = totalResaleGC + (dollars - totalCostGC);
 				System.out.println("GreedyClasses finished");
 				
+				BadAlgorithm algoGCH = new BadAlgorithm();
+				ArrayList<Item> tempItemListGCH = new ArrayList<Item>();
+				for (Item currItem: itemList) {
+					String name = currItem.getName();
+					int classNum = currItem.getClassNum();
+					double weight = currItem.getWeight();
+					double cost = currItem.getCost();
+					double resale = currItem.getResale();
+					tempItemListGCH.add(new Item(name, classNum, weight, cost, resale));
+				}
+				algoGCH.newStore(tempItemListGCH, pounds, dollars, constraints, numItems);
+				ArrayList<Item> itemsGCH = algoGCH.greedyClasses();
+				double totalResaleGCH = 0.0;
+				double totalCostGCH = 0.0;
+				for (Item currItem: itemsGCH) {
+					totalResaleGCH += currItem.getResale();
+					totalCostGCH += currItem.getCost();
+				}
+				double totalGCH = totalResaleGCH + (dollars - totalCostGCH);
+				System.out.println("GreedyClassesHeuristic finished");
+				
 				// literally random (done 50 times)
 				double totalR = 0.0;
 				ArrayList<Item> itemsRandom = new ArrayList<Item>();
 
-				for (int k = 0; k < 25; k++) {
+				for (int k = 0; k < 2; k++) {
 					RandomAlgorithm randomAlgo = new RandomAlgorithm();
 					ArrayList<Item> tempItemList3 = new ArrayList<Item>();
 					for (Item currItem: itemList) {
@@ -222,6 +250,7 @@ public class AlgorithmRunner {
 				System.out.println("ProfitGreedy profit is: " + totalP);
 				System.out.println("HeuristicGreedy profit is: " + totalH);
 				System.out.println("GreedyClasses profit is: " + totalGC);
+				System.out.println("GreedyClassesHeuristic profit is: " + totalGCH);
 				System.out.println("Random order profit is: " + totalR);
 				
 				
@@ -241,6 +270,10 @@ public class AlgorithmRunner {
 					itemsToBuy = itemsGC;
 					highestProfit = totalGC;
 				}
+				if (totalGCH > highestProfit) {
+					itemsToBuy = itemsGCH;
+					highestProfit = totalGCH;
+				}
 
 
 				if (highestProfit == totalPCR) {
@@ -253,6 +286,8 @@ public class AlgorithmRunner {
 					System.out.println("Greedy Heuristic has the most profit of: " + highestProfit);
 				} else if (highestProfit == totalGC) {
 					System.out.println("Greedy Classes has the most profit of: " + highestProfit);
+				} else if (highestProfit == totalGCH) {
+					System.out.println("Greedy Classes has the most profit of: " + highestProfit);
 				}
 
 				
@@ -262,7 +297,7 @@ public class AlgorithmRunner {
 				PrintWriter writer = null;
 				try {
 					//choose file name here
-					writer = new PrintWriter("output/problem" + i + ".out"); // i is still the problem number lol
+					writer = new PrintWriter("output_ec/problem" + i + ".out"); // i is still the problem number lol
 
 					
 					for (Item currItem: itemsToBuy) {
