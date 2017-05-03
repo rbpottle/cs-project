@@ -75,16 +75,6 @@ public class AlgorithmRunner {
 						}
 					}
 				}
-				/*
-				// remove unnecessary key value pairs
-				for (int classNum = 0; classNum < numItems; classNum++) {
-					HashSet<Integer> currHashSet = constraints.get(classNum);
-					if (currHashSet.isEmpty()) {
-						constraints.remove(classNum);
-					}
-				}
-				*/
-				System.out.println("size of constraints is: " + constraints.size());
 
 				
 				//Close the buffer reader
@@ -132,11 +122,9 @@ public class AlgorithmRunner {
 				}
 				greedyP.newStore(tempItemListP, pounds, dollars, constraints, numItems);
 				ArrayList<Item> itemsP = greedyP.runAlgorithm();
-				double totalProfitP = 0.0;
 				double totalResaleP = 0.0;
 				double totalCostP = 0.0;
 				for (Item currItem: itemsP) {
-					totalProfitP += currItem.getProfit();
 					totalResaleP += currItem.getResale();
 					totalCostP += currItem.getCost();
 				}
@@ -156,11 +144,9 @@ public class AlgorithmRunner {
 				}
 				greedyH.newStore(tempItemListH, pounds, dollars, constraints, numItems);
 				ArrayList<Item> itemsH = greedyH.runAlgorithm();
-				double totalProfitH = 0.0;
 				double totalResaleH = 0.0;
 				double totalCostH = 0.0;
 				for (Item currItem: itemsH) {
-					totalProfitH += currItem.getProfit();
 					totalResaleH += currItem.getResale();
 					totalCostH += currItem.getCost();
 				}
@@ -179,11 +165,10 @@ public class AlgorithmRunner {
 				}
 				algoGC.newStore(tempItemListGC, pounds, dollars, constraints, numItems);
 				ArrayList<Item> itemsGC = algoGC.greedyClasses();
-				double totalProfitGC = 0.0;
+
 				double totalResaleGC = 0.0;
 				double totalCostGC = 0.0;
 				for (Item currItem: itemsGC) {
-					totalProfitGC += currItem.getProfit();
 					totalResaleGC += currItem.getResale();
 					totalCostGC += currItem.getCost();
 				}
@@ -193,12 +178,8 @@ public class AlgorithmRunner {
 				// literally random (done 50 times)
 				double totalR = 0.0;
 				ArrayList<Item> itemsRandom = new ArrayList<Item>();
-				
-				int l = 3;
-				if (i == 4) {
-					l = 0;
-				}
-				for (int k = 0; k < l; k++) {
+
+				for (int k = 0; k < 25; k++) {
 					RandomAlgorithm randomAlgo = new RandomAlgorithm();
 					ArrayList<Item> tempItemList3 = new ArrayList<Item>();
 					for (Item currItem: itemList) {
@@ -214,11 +195,9 @@ public class AlgorithmRunner {
 					
 					ArrayList<Item> itemsR = randomAlgo.runAlgorithm();
 					
-					double totalProfitR = 0.0;
 					double totalResaleR = 0.0;
 					double totalCostR = 0.0;
 					for (Item currItem: itemsR) {
-						totalProfitR += currItem.getProfit();
 						totalResaleR += currItem.getResale();
 						totalCostR += currItem.getCost();
 					}

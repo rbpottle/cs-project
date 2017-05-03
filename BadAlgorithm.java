@@ -21,22 +21,7 @@ public class BadAlgorithm{
 	}
 
 	public ArrayList<Item> runAlgorithm() {
-		HashMap<Integer, HashSet<Integer>> currentConstraints = new HashMap<Integer, HashSet<Integer>>();
-		for (int classNum = 0; classNum < numItems; classNum++) {
-			if (constraints.containsKey(classNum)) {
-				currentConstraints.put(classNum, new HashSet<Integer>());
-			}
-		}
-		
-		for (int currClass: constraints.keySet())   {
-			HashSet<Integer> originalHashSet = constraints.get(currClass);
-			HashSet<Integer> currHashSet = currentConstraints.get(currClass);
-			currHashSet.addAll(originalHashSet);
-			
-		}
-		
-		
-		
+		HashMap<Integer, HashSet<Integer>> currentConstraints = constraints;
 		
 		ArrayList<Item> itemsLeft = itemList;
 		double moneyLeft = money;
@@ -57,7 +42,6 @@ public class BadAlgorithm{
 					for (Integer conflictingClass : incomp) {
 						incompatible.add(conflictingClass);
 					}
-					currentConstraints.remove(itemToAdd.getClassNum());
 				}
 
 			}

@@ -25,30 +25,7 @@ public class RandomAlgorithm{
 	}
 
 	public ArrayList<Item> runAlgorithm() {
-		/*
-		HashMap<Integer, HashSet<Integer>> currentConstraints = new HashMap<Integer, HashSet<Integer>>();
-		for (int classNum = 0; classNum < numItems; classNum++) {
-			currentConstraints.put(classNum, new HashSet<Integer>());
-		}
-		for (int currClass = 0; currClass < constraints.size(); currClass++)   {
-			HashSet<Integer> originalHashSet = constraints.get(currClass);
-			HashSet<Integer> currHashSet = currentConstraints.get(currClass);
-			currHashSet.addAll(originalHashSet);
-		}
-		*/
-		HashMap<Integer, HashSet<Integer>> currentConstraints = new HashMap<Integer, HashSet<Integer>>();
-		for (int classNum = 0; classNum < numItems; classNum++) {
-			if (constraints.containsKey(classNum)) {
-				currentConstraints.put(classNum, new HashSet<Integer>());
-			}
-		}
-		
-		for (int currClass: constraints.keySet())   {
-			HashSet<Integer> originalHashSet = constraints.get(currClass);
-			HashSet<Integer> currHashSet = currentConstraints.get(currClass);
-			currHashSet.addAll(originalHashSet);
-			
-		}
+		HashMap<Integer, HashSet<Integer>> currentConstraints = constraints;
 		
 		
 		ArrayList<Item> itemsLeft = itemList;
@@ -70,7 +47,6 @@ public class RandomAlgorithm{
 					for (Integer conflictingClass : incomp) {
 						incompatible.add(conflictingClass);
 					}
-					currentConstraints.remove(itemToAdd.getClassNum());
 				}
 
 			}
