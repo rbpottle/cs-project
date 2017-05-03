@@ -10,7 +10,7 @@ public class AlgorithmRunner {
 	public static void main(String[] args) {
 		
 		int numProblems = 21; // adjust this for however many number of problems there are
-		for (int i = 10; i <= numProblems; i++) {
+		for (int i = 1; i <= numProblems; i++) {
 			System.out.println("reading from problem" + i);
 			
 			String fileName="project_instances/problem" + i + ".in";
@@ -75,7 +75,7 @@ public class AlgorithmRunner {
 						}
 					}
 				}
-				
+				/*
 				// remove unnecessary key value pairs
 				for (int classNum = 0; classNum < numItems; classNum++) {
 					HashSet<Integer> currHashSet = constraints.get(classNum);
@@ -83,6 +83,7 @@ public class AlgorithmRunner {
 						constraints.remove(classNum);
 					}
 				}
+				*/
 				System.out.println("size of constraints is: " + constraints.size());
 
 				
@@ -108,9 +109,14 @@ public class AlgorithmRunner {
 				greedyPCR.newStore(tempItemList1, pounds, dollars, constraints, numItems);
 				ArrayList<Item> itemsPCR = greedyPCR.runAlgorithm();
 				double totalProfitPCR = 0.0;
+				double totalResalePCR = 0.0;
+				double totalCostPCR = 0.0;
 				for (Item currItem: itemsPCR) {
 					totalProfitPCR += currItem.getProfit();
+					totalResalePCR += currItem.getResale();
+					totalCostPCR += currItem.getCost();
 				}
+				double totalPCR = totalResalePCR + (dollars - totalCostPCR);
 				System.out.println("PCR finished");
 				
 				// greedy based on only profit
@@ -127,9 +133,14 @@ public class AlgorithmRunner {
 				greedyP.newStore(tempItemListP, pounds, dollars, constraints, numItems);
 				ArrayList<Item> itemsP = greedyP.runAlgorithm();
 				double totalProfitP = 0.0;
+				double totalResaleP = 0.0;
+				double totalCostP = 0.0;
 				for (Item currItem: itemsP) {
 					totalProfitP += currItem.getProfit();
+					totalResaleP += currItem.getResale();
+					totalCostP += currItem.getCost();
 				}
+				double totalP = totalResaleP + (dollars - totalCostP);
 				System.out.println("ProfitGreedy finished");
 				
 				// greedy based on a heuristic
@@ -146,9 +157,14 @@ public class AlgorithmRunner {
 				greedyH.newStore(tempItemListH, pounds, dollars, constraints, numItems);
 				ArrayList<Item> itemsH = greedyH.runAlgorithm();
 				double totalProfitH = 0.0;
+				double totalResaleH = 0.0;
+				double totalCostH = 0.0;
 				for (Item currItem: itemsH) {
 					totalProfitH += currItem.getProfit();
+					totalResaleH += currItem.getResale();
+					totalCostH += currItem.getCost();
 				}
+				double totalH = totalResaleH + (dollars - totalCostH);
 				System.out.println("ProfitHeuristic finished");
 				
 				BadAlgorithm algoGC = new BadAlgorithm();
@@ -164,13 +180,18 @@ public class AlgorithmRunner {
 				algoGC.newStore(tempItemListGC, pounds, dollars, constraints, numItems);
 				ArrayList<Item> itemsGC = algoGC.greedyClasses();
 				double totalProfitGC = 0.0;
+				double totalResaleGC = 0.0;
+				double totalCostGC = 0.0;
 				for (Item currItem: itemsGC) {
 					totalProfitGC += currItem.getProfit();
+					totalResaleGC += currItem.getResale();
+					totalCostGC += currItem.getCost();
 				}
+				double totalGC = totalResaleGC + (dollars - totalCostGC);
 				System.out.println("GreedyClasses finished");
 				
 				// literally random (done 50 times)
-				double totalProfitRandom = 0.0;
+				double totalR = 0.0;
 				ArrayList<Item> itemsRandom = new ArrayList<Item>();
 				
 				int l = 3;
@@ -191,16 +212,21 @@ public class AlgorithmRunner {
 					
 					randomAlgo.newStore(tempItemList3, pounds, dollars, constraints, numItems);
 					
-					ArrayList<Item> items3 = randomAlgo.runAlgorithm();
+					ArrayList<Item> itemsR = randomAlgo.runAlgorithm();
 					
-					double totalProfit3 = 0.0;
-					for (Item currItem: items3) {
-						totalProfit3 += currItem.getProfit();
+					double totalProfitR = 0.0;
+					double totalResaleR = 0.0;
+					double totalCostR = 0.0;
+					for (Item currItem: itemsR) {
+						totalProfitR += currItem.getProfit();
+						totalResaleR += currItem.getResale();
+						totalCostR += currItem.getCost();
 					}
+					double temptotalR = totalResaleR + (dollars - totalCostR);
 
-					if (totalProfit3 > totalProfitRandom) {
-						totalProfitRandom = totalProfit3;
-						itemsRandom = items3;
+					if (temptotalR > totalR) {
+						totalR = temptotalR;
+						itemsRandom = itemsR;
 						
 					}
 
@@ -209,44 +235,44 @@ public class AlgorithmRunner {
 				
 				// initialize the largest profit as well as the corresponding items
 				ArrayList<Item> itemsToBuy = itemsPCR; // temporarily sets to avoid errors
-				double highestProfit = totalProfitPCR;
+				double highestProfit = totalPCR;
 
 				// compare the profit of the algorithms
 				
-				System.out.println("PCR profit is: " + totalProfitPCR);
-				System.out.println("ProfitGreedy profit is: " + totalProfitP);
-				System.out.println("HeuristicGreedy profit is: " + totalProfitH);
-				System.out.println("GreedyClasses profit is: " + totalProfitGC);
-				System.out.println("Random order profit is: " + totalProfitRandom);
+				System.out.println("PCR profit is: " + totalPCR);
+				System.out.println("ProfitGreedy profit is: " + totalP);
+				System.out.println("HeuristicGreedy profit is: " + totalH);
+				System.out.println("GreedyClasses profit is: " + totalGC);
+				System.out.println("Random order profit is: " + totalR);
 				
 				
-				if (totalProfitP > highestProfit) {
+				if (totalP > highestProfit) {
 					itemsToBuy = itemsP;
-					highestProfit = totalProfitP;
+					highestProfit = totalP;
 				}
-				if (totalProfitRandom> highestProfit) {
+				if (totalR > highestProfit) {
 					itemsToBuy = itemsRandom;
-					highestProfit = totalProfitRandom;
+					highestProfit = totalR;
 				}
-				if (totalProfitH > highestProfit) {
+				if (totalH > highestProfit) {
 					itemsToBuy = itemsH;
-					highestProfit = totalProfitH;
+					highestProfit = totalH;
 				}
-				if (totalProfitGC > highestProfit) {
+				if (totalGC > highestProfit) {
 					itemsToBuy = itemsGC;
-					highestProfit = totalProfitGC;
+					highestProfit = totalGC;
 				}
 
 
-				if (highestProfit == totalProfitPCR) {
+				if (highestProfit == totalPCR) {
 					System.out.println("PCR has the most profit of: " + highestProfit);
-				} else if (highestProfit == totalProfitP) {
+				} else if (highestProfit == totalP) {
 					System.out.println("ProfitGreedy has the most profit of: " + highestProfit);
-				} else if (highestProfit == totalProfitRandom) {
+				} else if (highestProfit == totalR) {
 					System.out.println("Random order has the most profit of: " + highestProfit);
-				} else if (highestProfit == totalProfitH) {
+				} else if (highestProfit == totalH) {
 					System.out.println("Greedy Heuristic has the most profit of: " + highestProfit);
-				} else if (highestProfit == totalProfitGC) {
+				} else if (highestProfit == totalGC) {
 					System.out.println("Greedy Classes has the most profit of: " + highestProfit);
 				}
 

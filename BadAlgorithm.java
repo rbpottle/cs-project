@@ -78,11 +78,11 @@ public class BadAlgorithm{
 		ArrayList<ClassItem> classItems = new ArrayList<ClassItem>();
 		for (Integer j: itemsByClass.keySet()) {
 			int numClass = itemsByClass.get(j).size();
-			double totalPCR = 0;
+			double totalProfit = 0;
 			for (Item k: itemsByClass.get(j)) {
-				totalPCR += k.getPCR();
+				totalProfit += k.getProfit();
 			}
-			classItems.add(new ClassItem(j, totalPCR/numClass));
+			classItems.add(new ClassItem(j, totalProfit/numClass));
 		}
 		Collections.sort(classItems);
 		ArrayList<Item> itemsToBuy = new ArrayList<Item>();
