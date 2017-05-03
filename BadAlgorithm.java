@@ -61,4 +61,44 @@ public class BadAlgorithm{
 
 	}
 
+	public ArrayList<Item> greedyClasses() {
+		HashMap<Integer, HashSet<Item>> itemsByClass = new HashMap<Integer, HashSet<Item>>();
+		for (Item i : itemList) {
+			int currClass = i.getClassNum();
+			if (!itemsByClass.containsKey(currClass)) {
+				itemsByClass.put(currClass, new HashSet<Item>());
+			}
+			itemsByClass.get(currClass).add(i);
+		}
+		ArrayList<ClassItem> classItems = new ArrayList<ClassItem>();
+		for (Integer j: itemsByClass.keySet()) {
+			int numClass = itemsByClass.get(j).size();
+			double totalPCR = 0;
+			for (Item k: itemsByClass.get(j)) {
+				totalPCR += k.getPCR();
+			}
+			classItems.add(new ClassItem(j, totalPCR/numClass));
+		}
+		Collections.sort(classItems);
+		ArrayList<Item> itemsToBuy = new ArrayList<Item>();
+		HashSet<Integer> incomp = new HashSet<Integer>();
+		HashSet<Integer> seen = new HashSet<Integer>();
+		double moneyLeft = money;
+		double weightLeft = carryLimit;
+		for (ClassItem c : classItems) {
+			if (!incomp.contains(c.getClassNum())) {
+				if (!seen.contains(c.getClassNum())) {
+					incomp.addAll(constraints.get(c.getClassNum()));
+				}
+				for (Item itemToAdd : itemsByClass.get(c.getClassNum()))
+					if (itemToAdd.getWeight() <= weightLeft && itemToAdd.getCost() <= moneyLeft) {
+						itemsToBuy.add(itemToAdd);
+						moneyLeft -= itemToAdd.getCost();
+						weightLeft -= itemToAdd.getWeight();
+					}
+			}
+		}
+		return itemsToBuy;
+	}
+
 }
