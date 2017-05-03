@@ -162,7 +162,7 @@ public class AlgorithmRunner {
 					tempItemListGC.add(new Item(name, classNum, weight, cost, resale));
 				}
 				algoGC.newStore(tempItemListGC, pounds, dollars, constraints, numItems);
-				ArrayList<Item> itemsGC = algoGC.runAlgorithm();
+				ArrayList<Item> itemsGC = algoGC.greedyClasses();
 				double totalProfitGC = 0.0;
 				for (Item currItem: itemsGC) {
 					totalProfitGC += currItem.getProfit();
