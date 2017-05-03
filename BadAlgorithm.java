@@ -23,13 +23,18 @@ public class BadAlgorithm{
 	public ArrayList<Item> runAlgorithm() {
 		HashMap<Integer, HashSet<Integer>> currentConstraints = new HashMap<Integer, HashSet<Integer>>();
 		for (int classNum = 0; classNum < numItems; classNum++) {
-			currentConstraints.put(classNum, new HashSet<Integer>());
+			if (constraints.containsKey(classNum)) {
+				currentConstraints.put(classNum, new HashSet<Integer>());
+			}
 		}
-		for (int currClass = 0; currClass < constraints.size(); currClass++)   {
+		
+		for (int currClass: constraints.keySet())   {
 			HashSet<Integer> originalHashSet = constraints.get(currClass);
 			HashSet<Integer> currHashSet = currentConstraints.get(currClass);
 			currHashSet.addAll(originalHashSet);
+			
 		}
+		
 		
 		
 		
